@@ -1,14 +1,9 @@
 import { User } from "./src/models/User";
 
-const user = new User({ name: "myname", age: 26 });
+const user = new User({});
 
-user.set({ name: "new name", age: 19 });
+user.set({ name: "NEW name", age: 12 });
 
-console.log(user.get("name"));
-console.log(user.get("age"));
+user.save();
 
-user.on("change", () => {
-  console.log("test change event");
-});
-
-user.trigger("change");
+// user.fetch()

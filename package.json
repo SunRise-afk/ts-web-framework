@@ -3,10 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:parcel": "npx parcel index.html",
+    "start:db": "json-server -w db.json"
   },
   "private": true,
   "devDependencies": {
-    "prettier": "3.3.3"
+    "buffer": "^6.0.3",
+    "prettier": "3.3.3",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "axios": "^1.7.4",
+    "json-server": "^0.17.4"
   }
 }
