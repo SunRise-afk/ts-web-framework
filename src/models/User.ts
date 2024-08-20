@@ -1,42 +1,22 @@
-// outsource dependencies
-import axios, { AxiosResponse } from "axios";
-
 // local dependencies
+import { Sync } from "./Sync";
 import { Eventing } from "./Eventing";
+import { Attributes } from "./Attributes";
 
-interface UserProps {
+export interface UserProps {
   id?: number;
   age?: number;
   name?: string;
 }
 
+const rootUrl = "http://localhost:3000";
+
 export class User {
+  attributes: Attributes<UserProps>;
   events: Eventing = new Eventing();
+  sync: Sync<UserProps> = new Sync(rootUrl);
 
-  constructor(private data: UserProps) {}
-
-  get(propName: keyof UserProps): string | undefined | number {
-    return this.data[propName];
-  }
-
-  set(data: UserProps) {
-    Object.assign(this.data, data);
-  }
-
-  fetch(): void {
-    axios
-      .get(`http://localhost:3000/users/${this.get("id")}`)
-      .then((response: AxiosResponse): void => {
-        this.set(response.data);
-      });
-  }
-
-  save(): void {
-    const id = this.get("id");
-    if (id) {
-      axios.put(`http://localhost:3000/users/${id}`, this.data);
-    } else {
-      axios.post("http://localhost:3000/users/", this.data);
-    }
+  constructor(props: UserProps) {
+    this.attributes = new Attributes<UserProps>(props);
   }
 }
