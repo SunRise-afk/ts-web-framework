@@ -1,9 +1,9 @@
-import { Collection } from "./src/models/Collection";
+import { User } from "./src/models/User";
 
-const collection = new Collection("http://localhost:3000/users");
+const userCollection = User.buildUserCollection();
 
-collection.on("change", () => {
-  console.log(collection);
+userCollection.on("change", () => {
+  console.log(userCollection);
 });
 
-collection.fetch();
+userCollection.fetch();
