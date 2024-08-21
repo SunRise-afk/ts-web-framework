@@ -1,12 +1,16 @@
 import { User } from "./src/models/User";
 
-const user = new User({ id: 1, name: "name", age: 123 });
-
-console.log(user.get("age"));
+const user = new User({ id: 1 });
 
 user.on("change", () => {
-  console.log("change");
+  console.log("change", user);
+});
+user.on("save", () => {
+  console.log("save", user);
 });
 
-user.set({ age: 12 });
-console.log(user.get("age"));
+user.fetch();
+
+user.set({ age: 2, name: "Name to save" });
+
+user.save();

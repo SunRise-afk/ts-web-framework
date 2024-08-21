@@ -1,3 +1,6 @@
+// outsource dependencies
+import { AxiosResponse } from "axios";
+
 // local dependencies
 import { Sync } from "./Sync";
 import { Eventing } from "./Eventing";
@@ -9,7 +12,7 @@ export interface UserProps {
   name?: string;
 }
 
-const rootUrl = "http://localhost:3000";
+const rootUrl = "http://localhost:3000/users";
 
 export class User {
   attributes: Attributes<UserProps>;
@@ -33,5 +36,22 @@ export class User {
   set(update: UserProps) {
     this.attributes.set(update);
     this.events.trigger("change");
+  }
+
+  fetch() {
+    const id = this.get("id");
+    if (!id && id !== 0) {
+      throw new Error("Cannot fetch without an id");
+    }
+
+    this.sync.fetch(id).then((response: AxiosResponse): void => {
+      this.set(response.data);
+    });
+  }
+
+  save() {
+    this.sync
+      .save(this.attributes.getAll())
+      .then(() => this.events.trigger("save"));
   }
 }
