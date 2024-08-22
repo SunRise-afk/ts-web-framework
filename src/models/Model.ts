@@ -15,7 +15,7 @@ interface Events {
   on: (eventName: string, cb: () => void) => void;
 }
 
-interface HasId {
+export interface HasId {
   id?: number;
 }
 
