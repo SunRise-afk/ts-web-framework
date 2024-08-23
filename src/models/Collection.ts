@@ -25,8 +25,7 @@ export class Collection<T, K> {
       (response.data || []).forEach((item: K) => {
         this.models.push(this.deserialize(item));
       });
+      this.trigger("change");
     });
-
-    this.trigger("change");
   }
 }
